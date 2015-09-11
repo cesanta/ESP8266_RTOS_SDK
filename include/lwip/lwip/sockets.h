@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
- * All rights reserved. 
- * 
- * Redistribution and use in source and binary forms, with or without modification, 
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
@@ -11,22 +11,24 @@
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products
- *    derived from this software without specific prior written permission. 
+ *    derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED 
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
- * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  * OF SUCH DAMAGE.
  *
  * This file is part of the lwIP TCP/IP stack.
- * 
+ *
  * Author: Adam Dunkels <adam@sics.se>
+ *
+ * Modified by Cesanta Software
  *
  */
 
@@ -43,6 +45,9 @@
 #include "lwip/ip_addr.h"
 #include "lwip/inet.h"
 #include "lwip/inet6.h"
+
+/* Use fcntl.h instead of redeclaration F_GETFL & Co in this file */
+#include <fcntl.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -317,23 +322,6 @@ typedef struct ip_mreq {
 #define SIOCATMARK  _IOR('s',  7, unsigned long)  /* at oob mark? */
 #endif
 
-/* commands for fnctl */
-#ifndef F_GETFL
-#define F_GETFL 3
-#endif
-#ifndef F_SETFL
-#define F_SETFL 4
-#endif
-
-/* File status flags and file access modes for fnctl,
-   these are bits in an int. */
-#ifndef O_NONBLOCK
-#define O_NONBLOCK  1 /* nonblocking I/O */
-#endif
-#ifndef O_NDELAY
-#define O_NDELAY    1 /* same as O_NONBLOCK, for compatibility */
-#endif
-
 #ifndef SHUT_RD
   #define SHUT_RD   0
   #define SHUT_WR   1
@@ -357,7 +345,7 @@ typedef struct ip_mreq {
 #endif /* FD_SET */
 
 /** LWIP_TIMEVAL_PRIVATE: if you want to use the struct timeval provided
- * by your system, set this to 0 and include <sys/time.h> in cc.h */ 
+ * by your system, set this to 0 and include <sys/time.h> in cc.h */
 #ifndef LWIP_TIMEVAL_PRIVATE
 #define LWIP_TIMEVAL_PRIVATE 1
 #endif
