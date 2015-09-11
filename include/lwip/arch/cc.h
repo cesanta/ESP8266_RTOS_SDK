@@ -39,16 +39,14 @@
 #include "c_types.h"
 
 #include <errno.h>
+#define ERRNO
 
 /*
  * Lets use errno
  * instead of redeclaration
  */
-
 #if 0
 #define EFAULT 14
-
-#define ERRNO
 #define LWIP_PROVIDE_ERRNO
 #endif /* if 0 */
 
