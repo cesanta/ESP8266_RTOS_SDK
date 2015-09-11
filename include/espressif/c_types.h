@@ -1,11 +1,20 @@
 /*
  *  Copyright (c) 2010 - 2011 Espressif System
  *
+ *  Modified by Cesanta Software
+ *
  */
 
 #ifndef _C_TYPES_H_
 #define _C_TYPES_H_
 
+#include <stdint.h>
+
+/*
+ * These types already declared in
+ * stdint.h
+ */
+#if 0
 typedef unsigned char       uint8_t;
 typedef signed char         sint8_t;
 typedef signed char         int8_t;
@@ -20,6 +29,7 @@ typedef unsigned long long  uint64_t;
 typedef unsigned long long  u_int64_t;
 typedef float               real32_t;
 typedef double              real64_t;
+#endif /* if 0 */
 
 typedef unsigned char       uint8;
 typedef unsigned char       u8;
