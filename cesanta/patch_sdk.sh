@@ -10,4 +10,7 @@ xtensa-lx106-elf-objcopy --redefine-sym _read_r=_read_r_broken \
                          --redefine-sym _lseek_r=_lseek_r_broken \
                          --redefine-sym _close_r=_close_r_broken \
                          ./../lib/libmain.a
+for i in ./../lib/*.a; do
+    xtensa-lx106-elf-objcopy --redefine-sym printf=printf_broken $i
+done
 make -C ./src/lwip/
